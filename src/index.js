@@ -16,15 +16,34 @@ class App extends Component{
 		this.state = {
 			tasks: {}
 		}; 
-		this.updateTask = this.updateTask.bind(this);  
+		this.addTask = this.addTask.bind(this); 
+		this.removeTask = this.removeTask.bind(this);
+		this.updateTaskStatus = this.updateTaskStatus.bind(this);   
 	}
+	
 
-
-
-	updateTask(task){
+	addTask(task){
 		const tasks = {...this.state.tasks}; //take a copy
 		const timestamp = task.time; 
 		tasks[`task-${timestamp}`] = task; 
+		this.setState({tasks}); 
+	}
+
+
+	removeTask(task){
+		const tasks = {...this.state.tasks}; //take a copy
+		delete tasks[`${task}`]
+		this.setState({tasks}); 
+	}
+
+
+	updateTaskStatus(task){
+		const tasks = {...this.state.tasks};
+		if ( tasks[`${task}`].status === "Incomplete"){
+			tasks[`${task}`].status = "Complete"; 
+		} else{
+			tasks[`${task}`].status = "Incomplete"; 
+		}
 		this.setState({tasks}); 
 	}
 
@@ -33,8 +52,8 @@ class App extends Component{
 		console.log("Inside App render method"); 
 		return(
 			<div>
-				<InputTask updateTask={this.updateTask}/>
-				<TaskList tasks={this.state.tasks}/>
+				<InputTask addTask={this.addTask}/>
+				<TaskList updateTaskStatus= {this.updateTaskStatus} removeTask={this.removeTask} tasks={this.state.tasks}/>
 			</div>
 			)
 	}

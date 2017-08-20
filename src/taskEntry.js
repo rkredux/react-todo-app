@@ -4,16 +4,19 @@ class TaskEntry extends Component{
 
 	constructor(props){
 		super(props); 
+		this.handleDelete = this.handleDelete.bind(this); 
+		this.handleSelect = this.handleSelect.bind(this); 
 	}
-	
-	handleSelect(event){
-		event.preventDefault(); 
-		console.log("Checkbox selected"); 
+
+	handleSelect(){
+		// event.preventDefault(); 
+		console.log(this.props.taskId); 
+		this.props.updateTaskStatus(this.props.taskId); 
 	}
 
 	handleDelete(event){
 		event.preventDefault(); 
-		console.log("Task deleted"); 
+		this.props.removeTask(this.props.taskId); 
 	}
 
 	render(){
@@ -24,18 +27,14 @@ class TaskEntry extends Component{
 
 		return (
 			<div style={objStyle}>
-			   <input ref={(input) => this.check = input} type="checkbox" onClick={this.handleSelect}/>
+			   <input type="checkbox" name="status" value="check" onClick={this.handleSelect}/>
 			   <div>{this.props.name}</div>
-			   <input ref={(input) => this.delete = input} type="submit" value="Delete" onClick={this.handleDelete}/>
+			   <time>{new Date(this.props.time).toLocaleDateString()}</time>
+			   <input type="submit" value="delete" onClick={this.handleDelete}/>
 	        </div>
 	    ); 
 	}
 }
-
-
-ref={(input) => this.check = input}
-
-
 
 
 export default TaskEntry; 

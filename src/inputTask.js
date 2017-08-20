@@ -14,7 +14,7 @@ class InputTask extends Component{
 			status: "Incomplete", 
 			time: Date.now()
 		};
-		this.props.updateTask(obj); 
+		this.props.addTask(obj); 
 	}
 
 	render(){
